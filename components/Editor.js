@@ -113,19 +113,10 @@ class Editor extends React.Component {
                   </fieldset>
 
                   <fieldset className="form-group">
-                    <input
-                      className="form-control"
-                      type="text"
-                      placeholder="What's this article about?"
-                      value={this.props.description}
-                      onChange={this.changeDescription} />
-                  </fieldset>
-
-                  <fieldset className="form-group">
                     <textarea
                       className="form-control"
                       rows="8"
-                      placeholder="Write your article (in markdown)"
+                      placeholder="Write the policy (in markdown)"
                       value={this.props.body}
                       onChange={this.changeBody}>
                     </textarea>
@@ -135,7 +126,7 @@ class Editor extends React.Component {
                     <input
                       className="form-control"
                       type="text"
-                      placeholder="Enter tags"
+                      placeholder="Enter Website domain"
                       value={this.props.tagInput}
                       onChange={this.changeTagInput}
                       onKeyUp={this.watchForEnter} />
@@ -155,18 +146,15 @@ class Editor extends React.Component {
                       }
                     </div>
                   </fieldset>
-
                   <button
                     className="btn btn-lg pull-xs-right btn-primary"
                     type="button"
                     disabled={this.props.inProgress}
                     onClick={this.submitForm}>
-                    Publish Article
+                    Publish Policy
                   </button>
-
                 </fieldset>
               </form>
-
             </div>
           </div>
         </div>

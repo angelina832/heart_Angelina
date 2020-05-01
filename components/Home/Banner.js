@@ -7,7 +7,7 @@ const Banner = ({ appName, token }) => {
   return (
     <div className="banner">
       <div className="container">
-        <p>Be Aware Of What You're Agreeing to</p>
+        <p>Be Aware Of What You're Agreeing to!</p>
         <p>Avoid bad agreement</p>
         <p>Avoid accepting bad terms</p>
       </div>

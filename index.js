@@ -13,7 +13,7 @@ import Profile from './components/Profile';
 import ProfileFavorites from './components/ProfileFavorites';
 import Register from './components/Register';
 import Settings from './components/Settings';
-
+// this is a comment
 ReactDOM.render((
   <Provider store={store}>
     <Router history={hashHistory}>

@@ -1,10 +1,13 @@
 import ArticleMeta from './ArticleMeta';
 import CommentContainer from './CommentContainer';
+
 import React from 'react';
+
+import Diff from 'react-diff';
+
 import agent from '../../agent';
 import { connect } from 'react-redux';
 import marked from 'marked';
-import {parseDiff, Diff, Hunk} from 'react-diff-view';
 
 import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from '../../constants/actionTypes';
 
@@ -19,6 +22,7 @@ const mapDispatchToProps = dispatch => ({
   onUnload: () =>
     dispatch({ type: ARTICLE_PAGE_UNLOADED })
 });
+
 
 class Article extends React.Component {
   componentWillMount() {
@@ -36,21 +40,45 @@ class Article extends React.Component {
     if (!this.props.article) {
       return null;
     }
+    const oldCode = `
+              const a = 10
+              const b = 10
+              const c = () => console.log('foo')
 
-    const markup = { __html: marked(this.props.article.body, { sanitize: true }) };
+              if(a > 10) {
+                console.log('bar')
+              }
+
+              console.log('done')
+              `;
+
+    const newCode = `
+              const a = 10
+              const boo = 10
+
+              if(a === 10) {
+                console.log('bar')
+              }
+              `;
+
+    const markup = this.props.article.body;    
     const canModify = this.props.currentUser &&
-      this.props.currentUser.username === this.props.article.author.username;
+    this.props.currentUser.username === this.props.article.author.username;
+
+    if(this.props.article.prev_article){
+
+    const markup2 = this.props.article.prev_article.body;
+    console.log(this.props.article.prev_article)
+    console.log(markup, markup2);
     return (
       <div className="article-page">
 
         <div className="banner">
           <div className="container">
-
-            <h1>{this.props.article.title}</h1>
+            <h1>{this.props.article.tagList[0]}</h1>
             <ArticleMeta
               article={this.props.article}
               canModify={canModify} />
-
           </div>
         </div>
 
@@ -58,23 +86,38 @@ class Article extends React.Component {
 
           <div className="row article-content">
             <div className="col-xs-12">
+              <Diff inputA={String(markup2)} inputB={String(markup)} type="chars" />
+            </div>
+          </div>
 
+          <hr />
+
+          <div className="article-actions">
+          </div>
+
+        </div>
+      </div>
+    );
+    }
+
+    return (
+      <div className="article-page">
+
+        <div className="banner">
+          <div className="container">
+            <h1>{this.props.article.tagList[0]}</h1>
+            <h3>{this.props.article.title}</h3>
+            <ArticleMeta
+              article={this.props.article}
+              canModify={canModify} />
+          </div>
+        </div>
+
+        <div className="container page">
+
+          <div className="row article-content">
+            <div className="col-xs-12">
               <div dangerouslySetInnerHTML={markup}></div>
-
-              <ul className="tag-list">
-                {
-                  this.props.article.tagList.map(tag => {
-                    return (
-                      <li
-                        className="tag-default tag-pill tag-outline"
-                        key={tag}>
-                        {tag}
-                      </li>
-                    );
-                  })
-                }
-              </ul>
-
             </div>
           </div>
 

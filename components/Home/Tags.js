@@ -28,7 +28,8 @@ const Tags = props => {
     );
   } else {
     return (
-      <div></div>
+      <div>
+      </div>
     );
   }
 };
